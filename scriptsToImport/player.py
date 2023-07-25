@@ -1,6 +1,7 @@
 from ursina.prefabs.first_person_controller import FirstPersonController
 from ursina import *
-import time
+import scriptsToImport.misc as misc
+from ursina.prefabs.health_bar import HealthBar
 
 class Player(Entity):
     def __init__(self,**kwargs):
@@ -22,6 +23,7 @@ class Player(Entity):
                             model="assets/3d-models/item_chain_model.obj",
                             texture="assets/texture/item_chain_texture.png",
                             visible=False)
+        
         self.stabby = Entity(parent=self.controller.camera_pivot,
                             position=Vec3(0.7,-1,1.5),
                             rotation=Vec3(0,170,0),
@@ -32,6 +34,10 @@ class Player(Entity):
         self.itemList = [self.cube,self.chainItem,self.stabby]
         self.currentItem = 0
         self.switchItems()
+        self.stabbing = False
+        self.stabbingCounter = False
+        self.lastActivaed = 0
+        self.healthBar = HealthBar(max_value=100)
 
     def switchItems(self):
         for i,v in enumerate(self.itemList):
@@ -53,6 +59,16 @@ class Player(Entity):
         
         if key == "r":
             self.controller.position = Vec3(0,0,0)
-        
+
+        if mouse.left and self.currentItem == 2:
+            if self.stabbingCounter:
+                if misc.cooldown(lastActivated=self.lastActivaed,cooldown=0.5):
+                    self.stabbing = True
+                    self.lastActivaed = int(time.time())
+            else:
+                self.lastActivaed = int(time.time())
+                self.stabbing = True
+                self.stabbingCounter = True
+
     def update(self):
         self.controller.camera_pivot.y = 2 - held_keys["left control"]

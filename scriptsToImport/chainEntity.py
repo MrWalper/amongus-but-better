@@ -10,13 +10,5 @@ class chainEntity(Entity):
     
 def shootOut(angle,startPoint:Vec3,ignoreEntity:list):
     chainSound = Audio("assets\sound\metal-chain-uncut.mp3",autoplay=True)
-    chain = chainEntity()
-    ignoreEntity.append(chain)
-    hitInfo = raycast(startPoint,angle,100,ignore=[chain])
-    chain.position = startPoint
-    chain.world_rotation = angle
-    if hitInfo.hit:
-        goal = hitInfo.entity.model
-        print(goal)
-
-
+    hitInfo = raycast(startPoint,angle,100)
+    return(hitInfo)
