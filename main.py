@@ -29,8 +29,6 @@ ground = Entity(
     )
 
 playerEntity = player.Player()
-chainTest = chainEntity.chainEntity()
-chainTest.visible = True
 enemyIgnoreList = []
 lastSummoned = 0
 summonChecker = False
@@ -62,17 +60,17 @@ def update():
         if playerEntity.stabby.rotation_x == 330:
             playerEntity.stabbing = False
             playerEntity.stabby.rotation = Vec3(0,170,0)
-    
+
     if held_keys["e"]:
         if not summonChecker:
-            enemyIgnoreList.append(enemy.Enemy(listToIgnore=enemyIgnoreList,target=playerEntity))
+            enemyIgnoreList.append(enemy.Enemy(listToIgnore=enemyIgnoreList,target=playerEntity,ground=ground))
             lastSummoned = int(time.time())
             summonChecker = True 
         else:
             if misc.cooldown(lastActivated=lastSummoned,cooldown=1):
-                enemyIgnoreList.append(enemy.Enemy(listToIgnore=enemyIgnoreList,target=playerEntity))
+                enemyIgnoreList.append(enemy.Enemy(listToIgnore=enemyIgnoreList,target=playerEntity,ground=ground))
                 lastSummoned = int(time.time())
 
     coordsDisplay.text = f"X: {round(playerEntity.world_position.x)} Y: {round(playerEntity.world_position.y)} Z: {round(playerEntity.world_position.z)}"
-    
+
 app.run()  

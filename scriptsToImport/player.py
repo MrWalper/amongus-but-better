@@ -5,20 +5,21 @@ from ursina.prefabs.health_bar import HealthBar
 
 class Player(Entity):
     def __init__(self,**kwargs):
-        self.controller = FirstPersonController(**kwargs)
+        self.controller = FirstPersonController(**kwargs,collider="box")
+
         super().__init__(parent=self.controller,
                          scale = 3,
-                         Collider = "box",
                          model="assets/3d-models/player_basic.obj",
-                         texture="assets/texture/player_red.png")
+                         texture="assets/texture/player_red.png",
+                         )
 
         self.cube = Entity(parent=self.controller.camera_pivot,
                             position=Vec3(0.7,-1,1.5),
                             rotation=Vec3(0,170,0),
                             model="cube",
                             texture="grass",
-                            visible=False
-        )
+                            visible=False)
+        
         self.chainItem = Entity(parent=self.controller.camera_pivot,
                             position=Vec3(0.7,-1,1.5),
                             rotation=Vec3(0,170,0),
