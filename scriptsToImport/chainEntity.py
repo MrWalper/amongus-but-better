@@ -7,6 +7,7 @@ class chainEntity(Entity):
                          texture="assets/texture/chain_entity.png",
                         collider = "box",
                         visible=True)
+        self.isPlayer = False
     
 def shootOut(angle,startPoint:Vec3,ignoreEntity:list):
     chainSound = Audio("assets\sound\metal-chain-uncut.mp3",autoplay=True)

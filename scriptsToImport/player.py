@@ -8,7 +8,9 @@ class Player(Entity):
         self.controller = FirstPersonController(**kwargs)
         super().__init__(parent=self.controller,
                          scale = 3,
-                         Collider = "box")
+                         Collider = "box",
+                         model="assets/3d-models/player_basic.obj",
+                         texture="assets/texture/player_red.png")
 
         self.cube = Entity(parent=self.controller.camera_pivot,
                             position=Vec3(0.7,-1,1.5),
@@ -38,6 +40,7 @@ class Player(Entity):
         self.stabbingCounter = False
         self.lastActivaed = 0
         self.healthBar = HealthBar(max_value=100)
+        self.isPlayer = True
 
     def switchItems(self):
         for i,v in enumerate(self.itemList):
