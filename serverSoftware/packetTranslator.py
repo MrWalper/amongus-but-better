@@ -19,3 +19,15 @@ class reciver():
         
         elif self.packet[0] == "2":
             return packets.playerKeyPress(key=self.packet[1])
+        
+        elif self.packet[0] == "3":
+            self.rPlayerPos = packet[1] == 0
+            self.rPlayerAction = packet[2] == 0
+            self.rMisc = packet[3] == 0
+
+            return packets.requestSync(rPlayerPos=self.rPlayerPos,rPlayerAction=self.rPlayerAction,rMisc=self.rMisc,)
+
+        elif self.packet[0] == "4":
+            self.playerName = packet[1]
+
+            return packets.playerJoin(playerName=self.playerName)
